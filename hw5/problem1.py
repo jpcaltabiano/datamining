@@ -20,7 +20,7 @@ def Terms_and_Conditions():
     '''
     #****************************************
     #* CHANGE CODE HERE
-    Read_and_Agree = False  #if you have read and agree with the term above, change "False" to "True".
+    Read_and_Agree = True  #if you have read and agree with the term above, change "False" to "True".
     #****************************************
     return Read_and_Agree
 
@@ -105,6 +105,8 @@ class TicTacToe(BoardGame):
         #########################################
         ## INSERT YOUR CODE HERE
 
+        indicies = np.argwhere(s == 0)
+        m = [tuple(i) for i in indicies]
 
         #########################################
         return m
@@ -139,15 +141,25 @@ class TicTacToe(BoardGame):
 
         # check the 8 lines in the board to see if the game has ended.
 
+        xwin, owin = np.any(np.all(s == 1, axis=0)), np.any(np.all(s == -1, axis=0))
+
+        if not owin: owin = np.any(np.all(s == -1, axis=1))
+        if not owin: owin = np.all(np.diagonal(s) == -1)
+        if not owin: owin = np.all(np.diagonal(np.fliplr(s)) == -1)
+
+        if not xwin: xwin = np.any(np.all(s == 1, axis=1))
+        if not xwin: xwin = np.all(np.diagonal(s) == 1)
+        if not xwin: xwin = np.all(np.diagonal(np.fliplr(s)) == 1)
 
         # if the game has ended, return the game result 
 
-
-
-
-
+        if not (owin or xwin): e = 0
+        elif owin: e = -1
+        elif xwin: e = 1
 
         # if the game has not ended, return None
+
+        if e == 0 and not np.all(s != 0): return None
 
         #########################################
         return e
@@ -242,6 +254,22 @@ class RandomPlayer(Player):
         ## INSERT YOUR CODE HERE
 
         # find all valid moves in the current game state
+
+        a = np.argwhere(s == 0) # for tic tac toe
+        
+        # if g is an Othello() object:
+            # must be neighboring opponent piece 
+            # must have unlimited size line of contiguous opponent pieces
+            #   ending in a self piece
+
+
+
+
+
+
+        i = np.random.randint(a.shape[0], size=1)
+        r, c = a[i, 0], a[i, 1]
+        print("a: \n", a, "\n", "i: \n", i, "\n", "r: \n", r, "\n", "c: \n", c, "\n")
 
         # randomly choose one valid move
 
